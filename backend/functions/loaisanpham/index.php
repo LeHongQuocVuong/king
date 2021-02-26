@@ -1,5 +1,13 @@
 <!-- Nhúng file cấu hình để xác định được Tên và Tiêu đề của trang hiện tại người dùng đang truy cập -->
 <?php include_once(__DIR__ . '/../../layouts/config.php'); ?>
+<?php
+// hàm `session_id()` sẽ trả về giá trị SESSION_ID (tên file session do Web Server tự động tạo)
+// - Nếu trả về Rỗng hoặc NULL => chưa có file Session tồn tại
+if (session_id() === '') {
+  // Yêu cầu Web Server tạo file Session để lưu trữ giá trị tương ứng với CLIENT (Web Browser đang gởi Request)
+  session_start();
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +60,7 @@
 
         <!-- Nút thêm mới, bấm vào sẽ hiển thị form nhập thông tin Thêm mới -->
         <a href="create.php" class="btn btn-primary">Thêm mới</a>
-        <table class="table table-bordered table-hover mt-2">
+        <table id="tableSP" class="table table-bordered table-hover mt-2">
           <thead class="thead-dark">
           <tr>
               <th>STT</th>
@@ -75,10 +83,8 @@
                     <a href="edit.php?lsp_ma=<?= $lsp['lsp_ma'] ?>" class="btn btn-warning">
                       <span data-feather="edit"></span> Sửa
                     </a>
-                    <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `lsp_ma` -->
-                    <a href="delete.php?lsp_ma=<?= $lsp['lsp_ma'] ?>" class="btn btn-danger">
-                      <span data-feather="delete"></span> Xóa
-                    </a>
+                    <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `lsp_ma` -->                    
+                    <button class="btn btn-danger btnDelete" data-lsp_ma="<?= $lsp['lsp_ma'] ?>">Xóa</button>
                   </td>
                   
                 </tr>
@@ -98,8 +104,46 @@
   <!-- Nhúng file quản lý phần SCRIPT JAVASCRIPT -->
   <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
 
+  <!-- SweetAlert -->
+  <script src="/king/assets/vendor/sweetalert/sweetalert.min.js"></script>
   <!-- Các file Javascript sử dụng riêng cho trang này, liên kết tại đây -->
   <!-- <script src="..."></script> -->
+
+  <script>
+    $(document).ready( function () {
+      // Cảnh báo khi xóa
+        // 1. Đăng ký sự kiện click cho các phần tử (element) đang áp dụng class .btnDelete
+        
+        $('.btnDelete').click(function() {
+            // Click hanlder
+            // Hiện cảnh báo khi bấm nút xóa
+            swal({
+                title: "Bạn có chắc chắn muốn xóa?",
+                text: "Một khi đã xóa, không thể phục hồi....",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                
+                if (willDelete) { // Nếu đồng ý xóa
+                    
+                    // 2. Lấy giá trị của thuộc tính (custom attribute HTML) 'lsp_ma'
+                    
+                    var lsp_ma = $(this).data('lsp_ma');
+                    var url = "delete.php?lsp_ma=" + lsp_ma;
+                    
+                    // Điều hướng qua trang xóa với REQUEST GET, có tham số lsp_ma=...
+                    location.href = url;
+
+                } else {
+                    swal("Cẩn thận hơn nhé!");
+                }
+            });
+          });
+      
+    } );
+  </script>
 </body>
 
 </html>

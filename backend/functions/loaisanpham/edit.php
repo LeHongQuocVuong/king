@@ -1,5 +1,13 @@
 <!-- Nhúng file cấu hình để xác định được Tên và Tiêu đề của trang hiện tại người dùng đang truy cập -->
 <?php include_once(__DIR__ . '/../../layouts/config.php'); ?>
+<?php
+// hàm `session_id()` sẽ trả về giá trị SESSION_ID (tên file session do Web Server tự động tạo)
+// - Nếu trả về Rỗng hoặc NULL => chưa có file Session tồn tại
+if (session_id() === '') {
+  // Yêu cầu Web Server tạo file Session để lưu trữ giá trị tương ứng với CLIENT (Web Browser đang gởi Request)
+  session_start();
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -64,8 +72,8 @@
           // 2. Nếu người dùng có bấm nút "Lưu dữ liệu"
           if(isset($_POST['btnSave'])){
             // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
-            $lsp_ten = $_POST['lsp_ten'];
-            $lsp_mota = $_POST['lsp_mota'];
+            $lsp_ten = htmlentities($_POST['lsp_ten']);
+            $lsp_mota = htmlentities($_POST['lsp_mota']);
 
             // Kiểm tra ràng buộc dữ liệu (Validation)
             // Tạo biến lỗi để chứa thông báo lỗi
@@ -90,13 +98,13 @@
                 'msg' => 'Tên Loại sản phẩm phải có ít nhất 5 ký tự'
               ];
             }
-            // maxlength 50
-            if (!empty($lsp_ten) && strlen($lsp_ten) > 50) {
+            // maxlength 500
+            if (!empty($lsp_ten) && strlen($lsp_ten) > 500) {
               $errors['lsp_ten'][] = [
                 'rule' => 'maxlength',
-                'rule_value' => 50,
+                'rule_value' => 500,
                 'value' => $lsp_ten,
-                'msg' => 'Tên Loại sản phẩm không được vượt quá 50 ký tự'
+                'msg' => 'Tên Loại sản phẩm không được vượt quá 500 ký tự'
               ];
             }
 
@@ -119,13 +127,13 @@
                 'msg' => 'Mô tả loại sản phẩm phải có ít nhất 5 ký tự'
               ];
             }
-            // maxlength 255
-            if (!empty($lsp_mota) && strlen($lsp_mota) > 255) {
+            // maxlength 1000
+            if (!empty($lsp_mota) && strlen($lsp_mota) > 1000) {
               $errors['lsp_mota'][] = [
                 'rule' => 'maxlength',
-                'rule_value' => 255,
+                'rule_value' => 1000,
                 'value' => $lsp_mota,
-                'msg' => 'Mô tả loại sản phẩm không được vượt quá 255 ký tự'
+                'msg' => 'Mô tả loại sản phẩm không được vượt quá 1000 ký tự'
               ];
             }
           }
@@ -209,24 +217,24 @@ EOT;
         lsp_ten: {
           required: true,
           minlength: 5,
-          maxlength: 50
+          maxlength: 500
         },
         lsp_mota: {
           required: true,
           minlength: 5,
-          maxlength: 255
+          maxlength: 1000
         }
       },
       messages: {
         lsp_ten: {
           required: "Vui lòng nhập tên Loại sản phẩm",
           minlength: "Tên Loại sản phẩm phải có ít nhất 5 ký tự",
-          maxlength: "Tên Loại sản phẩm không được vượt quá 50 ký tự"
+          maxlength: "Tên Loại sản phẩm không được vượt quá 500 ký tự"
         },
         lsp_mota: {
           required: "Vui lòng nhập mô tả cho Loại sản phẩm",
           minlength: "Mô tả cho Loại sản phẩm phải có ít nhất 5 ký tự",
-          maxlength: "Mô tả cho Loại sản phẩm không được vượt quá 255 ký tự"
+          maxlength: "Mô tả cho Loại sản phẩm không được vượt quá 1000 ký tự"
         },
       },
       errorElement: "em",

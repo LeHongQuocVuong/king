@@ -1,215 +1,191 @@
-
-
-
-
-
-<script>
-    $(document).ready(function() {
-      $("#frmLoaiSanPham").validate({
-        rules: {
-          category_code: {
-            required: true,
-            minlength: 3,
-            maxlength: 50
-          },
-          category_name: {
-            required: true,
-            minlength: 3,
-            maxlength: 50
-          },
-          description: {
-            required: true,
-            minlength: 3,
-            maxlength: 255
-          }
-        },
-        messages: {
-          category_code: {
-            required: "Vui lòng nhập Mã Loại sản phẩm",
-            minlength: "Mã Loại sản phẩm phải có ít nhất 3 ký tự",
-            maxlength: "Mã Loại sản phẩm không được vượt quá 50 ký tự"
-          },
-          category_name: {
-            required: "Vui lòng nhập tên Loại sản phẩm",
-            minlength: "Tên Loại sản phẩm phải có ít nhất 3 ký tự",
-            maxlength: "Tên Loại sản phẩm không được vượt quá 50 ký tự"
-          },
-          description: {
-            required: "Vui lòng nhập mô tả cho Loại sản phẩm",
-            minlength: "Mô tả cho Loại sản phẩm phải có ít nhất 3 ký tự",
-            maxlength: "Mô tả cho Loại sản phẩm không được vượt quá 255 ký tự"
-          },
-        },
-        errorElement: "em",
-        errorPlacement: function(error, element) {
-          // Thêm class `invalid-feedback` cho field đang có lỗi
-          error.addClass("invalid-feedback");
-          if (element.prop("type") === "checkbox") {
-            error.insertAfter(element.parent("label"));
-          } else {
-            error.insertAfter(element);
-          }
-        },
-        success: function(label, element) {},
-        highlight: function(element, errorClass, validClass) {
-          $(element).addClass("is-invalid").removeClass("is-valid");
-        },
-        unhighlight: function(element, errorClass, validClass) {
-          $(element).addClass("is-valid").removeClass("is-invalid");
-        }
-      });
-    });
-  </script>
-
+<!-- Nhúng file cấu hình để xác định được Tên và Tiêu đề của trang hiện tại người dùng đang truy cập -->
+<?php include_once(__DIR__ . '/../../layouts/config.php'); ?>
 <?php
+// hàm `session_id()` sẽ trả về giá trị SESSION_ID (tên file session do Web Server tự động tạo)
+// - Nếu trả về Rỗng hoặc NULL => chưa có file Session tồn tại
+if (session_id() === '') {
+  // Yêu cầu Web Server tạo file Session để lưu trữ giá trị tương ứng với CLIENT (Web Browser đang gởi Request)
+  session_start();
+}
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Nhúng file quản lý phần HEAD -->
+  <?php include_once(__DIR__ . '/../../layouts/head.php'); ?>
+</head>
+
+<body class="d-flex flex-column h-100">
+  <!-- header -->
+  <?php include_once(__DIR__ . '/../../layouts/partials/header.php'); ?>
+  <!-- end header -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- sidebar -->
+      <?php include_once(__DIR__ . '/../../layouts/partials/sidebar.php'); ?>
+      <!-- end sidebar -->
+
+      <main role="main" class="col-md-10 ml-sm-auto px-4 mb-2">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Thêm mới</h1>
+        </div>
+
+        <!-- Block content -->
+        <?php
+        // Hiển thị tất cả lỗi trong PHP
+        // Chỉ nên hiển thị lỗi khi đang trong môi trường Phát triển (Development)
+        // Không nên hiển thị lỗi trên môi trường Triển khai (Production)
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
         // Truy vấn database
         // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
         include_once(__DIR__ . '/../../../dbconnect.php');
 
-        // 2. Nếu người dùng có bấm nút "Lưu dữ liệu" thì kiểm tra VALIDATE dữ liệu
+        /*  --- 
+        --- 2.Truy vấn dữ liệu sản phẩm 
+        --- 
+        */
+        // Chuẩn bị câu truy vấn sản phẩm
+        $sqlSanPham = "select * from `sanpham`";
+
+        // Thực thi câu truy vấn SQL để lấy về dữ liệu
+        $resultSanPham = mysqli_query($conn, $sqlSanPham);
+
+        // Khi thực thi các truy vấn dạng SELECT, dữ liệu lấy về cần phải phân tích để sử dụng
+        // Thông thường, chúng ta sẽ sử dụng vòng lặp while để duyệt danh sách các dòng dữ liệu được SELECT
+        // Ta sẽ tạo 1 mảng array để chứa các dữ liệu được trả về
+        $dataSanPham = [];
+        while ($rowSanPham = mysqli_fetch_array($resultSanPham, MYSQLI_ASSOC)) {
+          // Sử dụng hàm sprintf() để chuẩn bị mẫu câu với các giá trị truyền vào tương ứng từng vị trí placeholder
+          $sp_tomtat = sprintf(
+            "Sản phẩm %s, giá: %s",
+            $rowSanPham['sp_ten'],
+            number_format($rowSanPham['sp_gia'], 2, ".", ",") . ' vnđ'
+          );
+
+          $dataSanPham[] = array(
+            'sp_ma' => $rowSanPham['sp_ma'],
+            'sp_tomtat' => $sp_tomtat,
+          );
+        }
+        // var_dump($dataSanPham);die;
+        /* --- End Truy vấn dữ liệu sản phẩm --- */
+        ?>
+
+        <!-- Form cho phép người dùng upload file lên Server bắt buộc phải có thuộc tính enctype="multipart/form-data" -->
+        <form name="frmhinhsanpham" id="frmhinhanpham" method="post" action="" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="sp_ma">Sản phẩm</label>
+            <select class="form-control" id="sp_ma" name="sp_ma">
+              <?php foreach ($dataSanPham as $sanpham) : ?>
+                <option value="<?= $sanpham['sp_ma'] ?>"><?= $sanpham['sp_tomtat'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="hsp_tentaptin">Tập tin ảnh</label>
+
+            <!-- Tạo khung div hiển thị ảnh cho người dùng Xem trước khi upload file lên Server -->
+            <div class="preview-img-container">
+              <img src="/../../../king/assets/uploads/products/default-image_600.png" id="preview-img" width="200px" />
+            </div>
+
+            <!-- Input cho phép người dùng chọn FILE -->
+            <input type="file" class="form-control" id="hsp_tentaptin" name="hsp_tentaptin">
+          </div>
+          <button class="btn btn-primary" name="btnSave">Lưu</button>
+          <a href="index.php" class="btn btn-outline-secondary" name="btnBack" id="btnBack">Quay về</a>
+        </form>
+
+        <?php
+        // 3. Nếu người dùng có bấm nút Đăng ký thì thực thi câu lệnh UPDATE
         if (isset($_POST['btnSave'])) {
           // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
-          $category_code = $_POST['category_code'];
-          $category_name = $_POST['category_name'];
-          $description = $_POST['description'];
+          $sp_ma = $_POST['sp_ma'];
 
-          // Kiểm tra ràng buộc dữ liệu (Validation)
-          // Tạo biến lỗi để chứa thông báo lỗi
-          $errors = [];
+          // Nếu người dùng có chọn file để upload
+          if (isset($_FILES['hsp_tentaptin'])) {
+            // Đường dẫn để chứa thư mục upload trên ứng dụng web của chúng ta. Các bạn có thể tùy chỉnh theo ý các bạn.
+            // Ví dụ: các file upload sẽ được lưu vào thư mục ../../../assets/uploads
+            $upload_dir = __DIR__ . "/../../../assets/uploads/";
+            // Các hình ảnh sẽ được lưu trong thư mục con `products` để tiện quản lý
+            $subdir = 'products/';
 
-          // Validate Mã loại Sản phẩm
-          // required
-          if (empty($category_code)) {
-            $errors['category_code'][] = [
-              'rule' => 'required',
-              'rule_value' => true,
-              'value' => $category_code,
-              'msg' => 'Vui lòng nhập Mã Loại sản phẩm'
-            ];
-          }
-          // minlength 3
-          if (!empty($category_code) && strlen($category_code) < 3) {
-            $errors['category_code'][] = [
-              'rule' => 'minlength',
-              'rule_value' => 3,
-              'value' => $category_code,
-              'msg' => 'Mã sản phẩm phải có ít nhất 3 ký tự'
-            ];
-          }
-          // maxlength 50
-          if (!empty($category_code) && strlen($category_code) > 50) {
-            $errors['category_code'][] = [
-              'rule' => 'maxlength',
-              'rule_value' => 50,
-              'value' => $category_code,
-              'msg' => 'Mã Loại sản phẩm không được vượt quá 50 ký tự'
-            ];
-          }
+            // Đối với mỗi file, sẽ có các thuộc tính như sau:
+            // $_FILES['hsp_tentaptin']['name']     : Tên của file chúng ta upload
+            // $_FILES['hsp_tentaptin']['type']     : Kiểu file mà chúng ta upload (hình ảnh, word, excel, pdf, txt, ...)
+            // $_FILES['hsp_tentaptin']['tmp_name'] : Đường dẫn đến file tạm trên web server
+            // $_FILES['hsp_tentaptin']['error']    : Trạng thái của file chúng ta upload, 0 => không có lỗi
+            // $_FILES['hsp_tentaptin']['size']     : Kích thước của file chúng ta upload
 
-          // Validate Tên loại Sản phẩm
-          // required
-          if (empty($category_name)) {
-            $errors['category_name'][] = [
-              'rule' => 'required',
-              'rule_value' => true,
-              'value' => $category_name,
-              'msg' => 'Vui lòng nhập tên Loại sản phẩm'
-            ];
-          }
-          // minlength 3
-          if (!empty($category_name) && strlen($category_name) < 3) {
-            $errors['category_name'][] = [
-              'rule' => 'minlength',
-              'rule_value' => 3,
-              'value' => $category_name,
-              'msg' => 'Tên Loại sản phẩm phải có ít nhất 3 ký tự'
-            ];
-          }
-          // maxlength 50
-          if (!empty($category_name) && strlen($category_name) > 50) {
-            $errors['category_name'][] = [
-              'rule' => 'maxlength',
-              'rule_value' => 50,
-              'value' => $category_name,
-              'msg' => 'Tên Loại sản phẩm không được vượt quá 50 ký tự'
-            ];
-          }
+            // 3.1. Chuyển file từ thư mục tạm vào thư mục Uploads
+            // Nếu file upload bị lỗi, tức là thuộc tính error > 0
+            if ($_FILES['hsp_tentaptin']['error'] > 0) {
+              echo 'File Upload Bị Lỗi'; die;
+            } else {
+              // Để tránh trường hợp có 2 người dùng cùng lúc upload tập tin trùng tên nhau
+              // Ví dụ:
+              // - Người 1: upload tập tin hình ảnh tên `hoahong.jpg`
+              // - Người 2: cũng upload tập tin hình ảnh tên `hoahong.jpg`
+              // => dẫn đến tên tin trong thư mục chỉ còn lại tập tin người dùng upload cuối cùng
+              // Cách giải quyết đơn giản là chúng ta sẽ ghép thêm ngày giờ vào tên file
+              $hsp_tentaptin = $_FILES['hsp_tentaptin']['name'];
+              $tentaptin = date('YmdHis') . '_' . $hsp_tentaptin; //20200530154922_hoahong.jpg
 
-          // Validate Diễn giải
-          // required
-          if (empty($description)) {
-            $errors['description'][] = [
-              'rule' => 'required',
-              'rule_value' => true,
-              'value' => $description,
-              'msg' => 'Vui lòng nhập mô tả Loại sản phẩm'
-            ];
-          }
-          // minlength 3
-          if (!empty($description) && strlen($description) < 3) {
-            $errors['description'][] = [
-              'rule' => 'minlength',
-              'rule_value' => 3,
-              'value' => $description,
-              'msg' => 'Mô tả loại sản phẩm phải có ít nhất 3 ký tự'
-            ];
-          }
-          // maxlength 255
-          if (!empty($description) && strlen($description) > 255) {
-            $errors['description'][] = [
-              'rule' => 'maxlength',
-              'rule_value' => 255,
-              'value' => $description,
-              'msg' => 'Mô tả loại sản phẩm không được vượt quá 255 ký tự'
-            ];
+              // Tiến hành di chuyển file từ thư mục tạm trên server vào thư mục chúng ta muốn chứa các file uploads
+              // Ví dụ: move file từ C:\xampp\tmp\php6091.tmp -> C:/xampp/htdocs/learning.nentang.vn/php/twig/assets/uploads/hoahong.jpg
+              // var_dump($_FILES['hsp_tentaptin']['tmp_name']);
+              // var_dump($upload_dir . $subdir . $tentaptin);
+
+              move_uploaded_file($_FILES['hsp_tentaptin']['tmp_name'], $upload_dir . $subdir . $tentaptin);
+            }
+
+            // 3.2. Lưu thông tin file upload vào database
+            // Câu lệnh INSERT
+            $sql = "INSERT INTO `hinhsanpham` (hsp_tentaptin, sp_ma) VALUES ('$tentaptin', $sp_ma);";
+            // print_r($sql); die;
+
+            // Thực thi INSERT
+            mysqli_query($conn, $sql);
+
+            // Đóng kết nối
+            mysqli_close($conn);
+
+            // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
+            echo '<script>location.href = "index.php";</script>';
           }
         }
         ?>
+        <!-- End block content -->
+      </main>
+    </div>
+  </div>
 
-<!-- Nếu có lỗi VALIDATE dữ liệu thì hiển thị ra màn hình 
-        - Sử dụng thành phần (component) Alert của Bootstrap
-        - Mỗi một lỗi hiển thị sẽ in theo cấu trúc Danh sách không thứ tự UL > LI
-        -->
-        <?php if (
-          isset($_POST['btnSave'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
-          && isset($errors)         // Nếu biến $errors có tồn tại
-          && (!empty($errors))      // Nếu giá trị của biến $errors không rỗng
-        ) : ?>
-          <div id="errors-container" class="alert alert-danger face my-2" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <ul>
-              <?php foreach ($errors as $fields) : ?>
-                <?php foreach ($fields as $field) : ?>
-                  <li><?php echo $field['msg']; ?></li>
-                <?php endforeach; ?>
-              <?php endforeach; ?>
-            </ul>
-          </div>
-        <?php endif; ?>
+  <!-- footer -->
+  <?php include_once(__DIR__ . '/../../layouts/partials/footer.php'); ?>
+  <!-- end footer -->
 
-<?php
-        // Nếu không có lỗi VALIDATE dữ liệu (tức là dữ liệu đã hợp lệ)
-        // Tiến hành thực thi câu lệnh SQL Query Database
-        // => giá trị của biến $errors là rỗng
-        if (
-          isset($_POST['btnSave'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
-          && (!isset($errors) || (empty($errors))) // Nếu biến $errors không tồn tại Hoặc giá trị của biến $errors rỗng
-        ) {
-          // VALIDATE dữ liệu đã hợp lệ
-          // Thực thi câu lệnh SQL QUERY
-          // Câu lệnh INSERT
-          $sql = "INSERT INTO `shop_categories` (category_code, category_name, description) VALUES ('$category_code', '$category_name', '$description');";
+  <!-- Nhúng file quản lý phần SCRIPT JAVASCRIPT -->
+  <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
 
-          // Thực thi INSERT
-          mysqli_query($conn, $sql) or die("<b>Có lỗi khi thực thi câu lệnh SQL: </b>" . mysqli_error($conn) . "<br /><b>Câu lệnh vừa thực thi:</b></br>$sql");
+  <!-- Các file Javascript sử dụng riêng cho trang này, liên kết tại đây -->
+  <script>
+    // Hiển thị ảnh preview (xem trước) khi người dùng chọn Ảnh
+    const reader = new FileReader();
+    const fileInput = document.getElementById("hsp_tentaptin");
+    const img = document.getElementById("preview-img");
+    reader.onload = e => {
+      img.src = e.target.result;
+    }
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files[0];
+      reader.readAsDataURL(f);
+    })
+  </script>
+</body>
 
-          // Đóng kết nối
-          mysqli_close($conn);
-
-          // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
-          // Điều hướng bằng Javascript
-          echo '<script>location.href = "index.php";</script>';
-        }
-        ?>
+</html>
