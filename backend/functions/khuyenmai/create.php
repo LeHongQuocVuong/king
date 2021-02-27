@@ -46,12 +46,12 @@ if (session_id() === '') {
           </div>
           <div class="form-group">
             <label for="km_tungay">Từ ngày</label>
-            <input type="text" class="form-control" id="km_tungay" name="km_tungay" aria-describedby="km_tungayHelp">
+            <input type="date" class="form-control" id="km_tungay" name="km_tungay" aria-describedby="km_tungayHelp">
             <small id="km_tungayHelp" class="form-text text-muted">Nhập ngày bắt đầu</small>
           </div>
           <div class="form-group">
             <label for="km_denngay">Đến ngày</label>
-            <input type="text" class="form-control" id="km_denngay" name="km_denngay" aria-describedby="km_denngayHelp">
+            <input type="date" class="form-control" id="km_denngay" name="km_denngay" aria-describedby="km_denngayHelp">
             <small id="km_denngayHelp" class="form-text text-muted">Nhập ngày kết thúc</small>
           </div>
           

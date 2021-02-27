@@ -46,7 +46,7 @@
                                 Đăng xuất
                               </a>
                             <?php else : ?>
-                              <a class="btn btn-outline-secondary"  href="/king/backend/auth/login.php">
+                              <a class="btn btn-outline-secondary"  href="/king/dangnhap.php">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 Đăng nhập
                               </a>

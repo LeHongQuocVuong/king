@@ -63,36 +63,7 @@ $(document).ready(function () {
         return false;
     });
 
-    //Đăng Nhập
-    // Dang Nhap
-    function isEmail(inputEmail) {
-        var regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
-        return regex.test(inputEmail);
-    }
-    function validatePassword(inputPassword) {
-        return inputPassword.length > 4;
-    }
-
-    $(document).ready(function () {
-        $('#txtEmail').change(function () {
-            var email = $(this).val().trim();
-
-            if (!isEmail(email)) {
-                //Error ?
-                $("#EmailError").html("Email không hợp lệ");
-            } else {
-                $("#EmailError").html("");
-            }
-        });
-        $('#pass').change(function () {
-            var password = $(this).val();
-            if (!validatePassword(password)) {
-                $("#PassError").html("Mật khẩu phải hơn 5 ký tự");
-            } else {
-                $("#PassError").html("");
-            }
-        });
-    });
+    
 
     // Chuyển sang tab tạo tài khoản
 

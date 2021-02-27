@@ -151,13 +151,13 @@ if (session_id() === '') {
                             <div class="col">
                                 <div class="form-group">
                                     <label>Ngày lập</label>
-                                    <input type="text" name="dh_ngaylap" id="dh_ngaylap" class="form-control" />
+                                    <input type="date" name="dh_ngaylap" id="dh_ngaylap" class="form-control" />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Ngày giao</label>
-                                    <input type="text" name="dh_ngaygiao" id="dh_ngaygiao" class="form-control" />
+                                    <input type="date" name="dh_ngaygiao" id="dh_ngaygiao" class="form-control" />
                                 </div>
                             </div>
                             <div class="col">

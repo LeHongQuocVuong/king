@@ -175,13 +175,13 @@ if (session_id() === '') {
                             <div class="col">
                                 <div class="form-group">
                                     <label>Ngày lập</label>
-                                    <input type="text" name="dh_ngaylap" id="dh_ngaylap" class="form-control" value="<?= $selectRow['dh_ngaylap'] ?>"/>
+                                    <input type="date" name="dh_ngaylap" id="dh_ngaylap" class="form-control" value="<?= $selectRow['dh_ngaylap'] ?>"/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label>Ngày giao</label>
-                                    <input type="text" name="dh_ngaygiao" id="dh_ngaygiao" class="form-control" value="<?= $selectRow['dh_ngaygiao'] ?>"/>
+                                    <input type="date" name="dh_ngaygiao" id="dh_ngaygiao" class="form-control" value="<?= $selectRow['dh_ngaygiao'] ?>"/>
                                 </div>
                             </div>
                             <div class="col">

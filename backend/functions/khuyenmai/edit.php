@@ -61,12 +61,12 @@ EOT;
           </div>
           <div class="form-group">
             <label for="km_tungay">Từ ngày</label>
-            <input type="text" class="form-control" id="km_tungay" name="km_tungay" aria-describedby="km_tungayHelp" value="<?= $selectRow['km_tungay']?>">
+            <input type="date" class="form-control" id="km_tungay" name="km_tungay" aria-describedby="km_tungayHelp" value="<?= $selectRow['km_tungay']?>">
             <small id="km_tungayHelp" class="form-text text-muted">Nhập ngày bắt đầu</small>
           </div>
           <div class="form-group">
             <label for="km_denngay">Đến ngày</label>
-            <input type="text" class="form-control" id="km_denngay" name="km_denngay" aria-describedby="km_denngayHelp" value="<?= $selectRow['km_denngay']?>">
+            <input type="date" class="form-control" id="km_denngay" name="km_denngay" aria-describedby="km_denngayHelp" value="<?= $selectRow['km_denngay']?>">
             <small id="km_denngayHelp" class="form-text text-muted">Nhập ngày kết thúc</small>
           </div>
           

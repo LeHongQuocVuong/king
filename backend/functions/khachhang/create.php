@@ -81,31 +81,8 @@ if (session_id() === '') {
         </div>
 
         <div class="form-group">
-          <label>Ngày sinh</label>
-            <select name="kh_ngaysinh" id="kh_ngaysinh" class="form-control">
-            <option value="">Vui lòng chọn Ngày sinh</option>
-                <?php for ($i=1; $i<=31; $i++) : ?>
-                    <option value="<?= $i ?>"><?= $i ?></option>
-                <?php endfor; ?>
-            </select>
-        </div>
-        <div class="form-group">
-          <label>Tháng sinh</label>
-            <select name="kh_thangsinh" id="kh_thangsinh" class="form-control">
-            <option value="">Vui lòng chọn Tháng sinh</option>
-                <?php for ($i=1; $i<=12; $i++) : ?>
-                    <option value="<?= $i ?>"><?= "Tháng " . $i ?></option>
-                <?php endfor; ?>
-            </select>
-        </div>
-        <div class="form-group">
-          <label>Năm sinh</label>
-            <select name="kh_namsinh" id="kh_namsinh" class="form-control">
-            <option value="">Vui lòng chọn Năm sinh</option>
-                <?php for ($i=2021; $i>=1900; $i--) : ?>
-                    <option value="<?= $i ?>"><?= $i ?></option>
-                <?php endfor; ?>
-            </select>
+            <label for="kh_ngaysinh">Ngày sinh</label>
+            <input type="date" class="form-control" value="2020-09-20" name="kh_ngaysinh" id="kh_ngaysinh">
         </div>
 
         <div class="form-group">
@@ -141,8 +118,6 @@ if (session_id() === '') {
             $kh_dienthoai = htmlentities($_POST['kh_dienthoai']);
             $kh_email = htmlentities($_POST['kh_email']);
             $kh_ngaysinh = htmlentities($_POST['kh_ngaysinh']);
-            $kh_thangsinh = htmlentities($_POST['kh_thangsinh']);
-            $kh_namsinh = htmlentities($_POST['kh_namsinh']);
             $kh_cmnd = htmlentities($_POST['kh_cmnd']);
             $kh_quantri = htmlentities($_POST['kh_quantri']);
             
@@ -294,28 +269,7 @@ if (session_id() === '') {
               ];
             }
 
-            // Validate tháng sinh
-            // required
-            if(empty($kh_thangsinh)){
-              $errors['kh_thangsinh'][] = [
-                'rule' => 'required',
-                'rule_value' => true,
-                'value' => $kh_thangsinh,
-                'msg' => 'Vui lòng nhập tháng sinh'
-              ];
-            }
-
-            // Validate Năm sinh
-            // required
-            if(empty($kh_namsinh)){
-              $errors['kh_namsinh'][] = [
-                'rule' => 'required',
-                'rule_value' => true,
-                'value' => $kh_namsinh,
-                'msg' => 'Vui lòng nhập năm sinh'
-              ];
-            }
-
+            
             // Validate số chứng minh nhân dân
             // required
             if(empty($kh_cmnd)){
@@ -377,8 +331,8 @@ if (session_id() === '') {
             // Câu lệnh INSERT
             $sql = <<<EOT
             INSERT INTO khachhang
-            (kh_tendangnhap, kh_matkhau, kh_ten, kh_gioitinh, kh_diachi, kh_dienthoai, kh_email, kh_ngaysinh, kh_thangsinh, kh_namsinh, kh_cmnd, kh_quantri)
-            VALUES ('$kh_tendangnhap', '$kh_matkhau', '$kh_ten', $kh_gioitinh, '$kh_diachi', '$kh_dienthoai', '$kh_email', $kh_ngaysinh, $kh_thangsinh, $kh_namsinh, '$kh_cmnd', $kh_quantri);
+            (kh_tendangnhap, kh_matkhau, kh_ten, kh_gioitinh, kh_diachi, kh_dienthoai, kh_email, kh_ngaysinh, kh_cmnd, kh_quantri)
+            VALUES ('$kh_tendangnhap', '$kh_matkhau', '$kh_ten', $kh_gioitinh, '$kh_diachi', '$kh_dienthoai', '$kh_email', '$kh_ngaysinh', '$kh_cmnd', $kh_quantri);
 EOT;
             // Thực thi INSERT
             mysqli_query($conn, $sql);
@@ -440,12 +394,7 @@ EOT;
         kh_ngaysinh: {
           required: true          
         },
-        kh_thangsinh: {
-          required: true          
-        },
-        kh_namsinh: {
-          required: true          
-        },
+        
         kh_cmnd: {
           required: true          
         },
@@ -484,12 +433,7 @@ EOT;
         kh_ngaysinh: {
           required: "Vui lòng nhập ngày sinh"
           },
-        kh_thangsinh: {
-          required: "Vui lòng nhập tháng sinh"
-          },
-        kh_namsinh: {
-          required: "Vui lòng nhập năm sinh"
-          },
+        
         kh_cmnd: {
           required: "Vui lòng nhập chứng minh nhân dân"
           },

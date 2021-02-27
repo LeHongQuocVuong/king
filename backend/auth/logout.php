@@ -12,7 +12,7 @@ if (session_id() === '') {
 // => xóa bỏ giá trị trong SESSION và Điều hướng người dùng về trang DASHBOARD
 if(isset($_SESSION['kh_tendangnhap_logged'])) {
     unset($_SESSION['kh_tendangnhap_logged']);
-    header('location:login.php');
+    header('location:/king/dangnhap.php');
 }
 else {
     echo 'Người dùng chưa đăng nhập. Không thể đăng xuất dược!'; die;

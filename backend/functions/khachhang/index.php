@@ -45,7 +45,7 @@ if (session_id() === '') {
         // 2. Chuẩn bị câu truy vấn $sql
         $stt=1;
         $sql = <<<EOT
-        SELECT kh_tendangnhap, kh_matkhau, kh_ten, kh_gioitinh, kh_diachi, kh_dienthoai, kh_email, kh_ngaysinh, kh_thangsinh, kh_namsinh, kh_cmnd, kh_quantri
+        SELECT kh_tendangnhap, kh_matkhau, kh_ten, kh_gioitinh, kh_diachi, kh_dienthoai, kh_email, kh_ngaysinh, kh_cmnd, kh_quantri
 	      FROM khachhang;
 EOT;
 
@@ -67,8 +67,7 @@ EOT;
             'kh_dienthoai' => $row['kh_dienthoai'],
             'kh_email' => $row['kh_email'],
             'kh_ngaysinh' => $row['kh_ngaysinh'],
-            'kh_thangsinh' => $row['kh_thangsinh'],
-            'kh_namsinh' => $row['kh_namsinh'],
+            
             'kh_cmnd' => $row['kh_cmnd'],
             'kh_quantri' => $row['kh_quantri']            
           );
@@ -91,8 +90,7 @@ EOT;
                 <th>Điện thoại</th>
                 <th>Email</th>
                 <th>Ngày sinh</th>
-                <th>Tháng sinh</th>
-                <th>Năm sinh</th>
+                
                 <th>Chứng minh nhân dân</th>
                 <th>Quản trị</th>
                 
@@ -112,8 +110,7 @@ EOT;
                     <td><?= $kh['kh_dienthoai']?></td>
                     <td><?= $kh['kh_email']?></td>
                     <td><?= $kh['kh_ngaysinh']?></td>
-                    <td><?= $kh['kh_thangsinh']?></td>
-                    <td><?= $kh['kh_namsinh']?></td>
+                    
                     <td><?= $kh['kh_cmnd']?></td>
                     <td><?php if($kh['kh_quantri']) echo "Quản trị"; else echo"Khách hàng";?></td>
                     <td>
