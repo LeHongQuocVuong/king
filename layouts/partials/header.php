@@ -4,7 +4,7 @@
             <div class="container">
 
                 <a class="navbar-brand" href="/king/index.php" style="color:#d4af37; font-weight: bold; font-size: 30px;">
-                    <img src="/test/assets/img/logo/logo1.png" alt="" style="width: 50px; height: 50px;">
+                    <img src="/king/assets/img/logo/logo1.png" alt="" style="width: 50px; height: 50px;">
 
                     KING</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"

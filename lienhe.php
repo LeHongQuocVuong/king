@@ -22,7 +22,7 @@ if (session_id() === '') {
     <link rel="stylesheet" href="assets/vendor/OwlCarousel/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="assets/vendor/OwlCarousel/css/owl.theme.default.min.css" type="text/css">
     <!-- Nhúng file Quản lý các Liên kết CSS dùng chung cho toàn bộ trang web -->
-    <?php include_once(__DIR__ . './layouts/styles.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/styles.php'); ?>
     <!-- Custom css - Các file css do chúng ta tự viết -->
     <link rel="stylesheet" href="/king/assets/css/app.css" type="text/css">
 
@@ -217,7 +217,7 @@ if (session_id() === '') {
 
 <body>
     <!-- header -->
-    <?php include_once(__DIR__ . './layouts/partials/header.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/header.php'); ?>
     <!-- end header -->        
 
         <!-- Liên Hệ -->
@@ -473,7 +473,7 @@ if (session_id() === '') {
 
         <?php
         // Load các thư viện (packages) do Composer quản lý vào chương trình
-        require_once __DIR__.'./vendor/autoload.php';
+        require_once __DIR__.'/vendor/autoload.php';
 
         // Sử dụng thư viện PHP Mailer
         use PHPMailer\PHPMailer\PHPMailer;

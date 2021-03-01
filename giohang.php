@@ -16,7 +16,7 @@ if (session_id() === '') {
     <title>Lê Hồng Quốc Vương</title>
 
     <!-- Nhúng file Quản lý các Liên kết CSS dùng chung cho toàn bộ trang web -->
-    <?php include_once(__DIR__ . './layouts/styles.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/styles.php'); ?>
     <!-- Custom css - Các file css do chúng ta tự viết -->
     <link rel="stylesheet" href="assets/css/app.css" type="text/css">
 
@@ -32,7 +32,7 @@ if (session_id() === '') {
 
 <body class="d-flex flex-column h-100">
     <!-- header -->
-    <?php include_once(__DIR__ . './layouts/partials/header.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/header.php'); ?>
     <!-- end header -->
 
     <main role="main" class="mb-2">
@@ -40,7 +40,7 @@ if (session_id() === '') {
         <?php
         // Truy vấn database để lấy danh sách
         // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
-        include_once(__DIR__ . './dbconnect.php');
+        include_once(__DIR__ . '/dbconnect.php');
 
         // Kiểm tra dữ liệu trong session
         $giohangdata = [];
@@ -118,11 +118,11 @@ if (session_id() === '') {
     </main>
 
     <!-- footer -->
-    <?php include_once(__DIR__ . './layouts/partials/footer.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/footer.php'); ?>
     <!-- end footer -->
 
     <!-- Nhúng file quản lý phần SCRIPT JAVASCRIPT -->
-    <?php include_once(__DIR__ . './layouts/scripts.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/scripts.php'); ?>
 
     <!-- Các file Javascript sử dụng riêng cho trang này, liên kết tại đây -->
     <script>

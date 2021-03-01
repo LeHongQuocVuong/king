@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Load các thư viện (packages) do Composer quản lý vào chương trình
-require_once __DIR__ . './vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Sử dụng thư viện PHP Mailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -34,7 +34,7 @@ if (!isset($_SESSION['kh_tendangnhap_logged']) || empty($_SESSION['kh_tendangnha
     // Nếu đã đăng nhập, tạo Đơn hàng
     // Truy vấn database
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
-    include_once(__DIR__ . './dbconnect.php');
+    include_once(__DIR__ . '/dbconnect.php');
 
     /* --- 
     --- 2.Truy vấn dữ liệu Khách hàng 

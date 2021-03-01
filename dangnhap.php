@@ -15,7 +15,7 @@ if (session_id() === '') {
     <title>Đăng nhâp</title>
 
     <!-- Nhúng file Quản lý các Liên kết CSS dùng chung cho toàn bộ trang web -->
-    <?php include_once(__DIR__ . './layouts/styles.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/styles.php'); ?>
     
     <!-- Liên kết CSS Bootstrap -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
@@ -35,7 +35,7 @@ if (session_id() === '') {
 
 <body>
     <!-- header -->
-    <?php include_once(__DIR__ . './layouts/partials/header.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/header.php'); ?>
     <!-- end header -->
     <?php
     // Đã đăng nhập rồi -> điều hướng về trang chủ
@@ -318,7 +318,7 @@ if (session_id() === '') {
         <button id="myBtn" title="Go to top"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
 
         <?php 
-            include_once(__DIR__ . '../dbconnect.php');
+            include_once(__DIR__ . '/dbconnect.php');
 
             if(isset($_POST['btnDangNhap'])){
                 $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);

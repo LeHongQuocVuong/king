@@ -19,7 +19,7 @@ if (session_id() === '') {
     <!-- Font awesome -->
     <link rel="stylesheet" href="/king/assets/vendor/font-awesome/css/font-awesome.min.css" type="text/css">
     <!-- Nhúng file Quản lý các Liên kết CSS dùng chung cho toàn bộ trang web -->
-    <?php include_once(__DIR__ . './layouts/styles.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/styles.php'); ?>
     <!-- Custom css - Các file css do chúng ta tự viết -->
     <link rel="stylesheet" href="/king/assets/css/app.css" type="text/css">
 
@@ -100,7 +100,7 @@ if (session_id() === '') {
 
 <body>
     <!-- header -->
-    <?php include_once(__DIR__ . './layouts/partials/header.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/header.php'); ?>
     <!-- end header -->
 
         <!-- Tính năng Marketing -->
@@ -316,11 +316,11 @@ if (session_id() === '') {
     <!-- Custom script - Các file js do mình tự viết -->
     <!-- <script src="/king/assets/js/app.js"></script> -->
     <!-- footer -->
-    <?php include_once(__DIR__ . './layouts/partials/footer.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/partials/footer.php'); ?>
     <!-- end footer -->
 
     <!-- Nhúng file quản lý phần SCRIPT JAVASCRIPT -->
-    <?php include_once(__DIR__ . './layouts/scripts.php'); ?>
+    <?php include_once(__DIR__ . '/layouts/scripts.php'); ?>
 
     <script>
         AOS.init();
