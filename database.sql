@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `dondathang` (
   CONSTRAINT `dondathang_hinhthucthanhtoan` FOREIGN KEY (`httt_ma`) REFERENCES `hinhthucthanhtoan` (`httt_ma`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table king.dondathang: ~11 rows (approximately)
+-- Dumping data for table king.dondathang: ~9 rows (approximately)
 /*!40000 ALTER TABLE `dondathang` DISABLE KEYS */;
 INSERT INTO `dondathang` (`dh_ma`, `dh_ngaylap`, `dh_ngaygiao`, `dh_noigiao`, `dh_trangthaithanhtoan`, `httt_ma`, `kh_tendangnhap`) VALUES
 	(1, '2020-02-21 16:45:44', '2020-02-01 00:00:00', 'Can Tho', 0, 1, 'nva'),
@@ -253,14 +253,14 @@ CREATE TABLE IF NOT EXISTS `khachhang` (
   PRIMARY KEY (`kh_tendangnhap`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table king.khachhang: ~4 rows (approximately)
+-- Dumping data for table king.khachhang: ~7 rows (approximately)
 /*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
 INSERT INTO `khachhang` (`kh_tendangnhap`, `kh_matkhau`, `kh_ten`, `kh_gioitinh`, `kh_diachi`, `kh_dienthoai`, `kh_email`, `kh_ngaysinh`, `kh_cmnd`, `kh_quantri`) VALUES
-	('admin', '123', 'Quản trị', 1, 'Số 01 - Lý Tự Trọng - Cần Thơ', '0354685880', 'admin@king.vn', '1999-10-30', '33184377', 1),
-	('kh_ngaysinh', 'kh_ngaysinh', 'kh_ngaysinh', 0, 'kh_ngaysinh', 'kh_ngaysinh', 'kh_ngaysinh', '2020-09-20', 'kh_ngaysinh', 0),
-	('nva', '123', 'Nguyễn Văn A', 1, 'Cần Thơ', '0111111111', 'nva@gmail.com', '1990-03-29', '33111111', 0),
-	('quocvuong', '123', 'Quốc Vương', 1, 'Vĩnh Long', '0123456789', 'quocvuong@gmail.com', '1988-07-20', '33123456', 0),
-	('ssssssssss', 'dfdfdfdfdf', 'rtrtrtrt', 1, 'yuyuyuyuuy', '2222222222222222', 'oioiooioioio', '1890-06-30', '00000000000009999999999999', 0),
+	('admin', '123', 'Quản trị', 1, 'Số 01 - Lý Tự Trọng - Cần Thơ', '0354685880', 'lehongquocvuong@gmail.com', '1999-10-30', '33184377', 1),
+	('kh_ngaysinh', 'kh_ngaysinh', 'kh_ngaysinh', 0, 'kh_ngaysinh', 'kh_ngaysinh', 'lehongquocvuong@gmail.com', '2020-09-20', 'kh_ngaysinh', 0),
+	('nva', '123', 'Nguyễn Văn A', 1, 'Cần Thơ', '0111111111', 'lehongquocvuong@gmail.com', '1990-03-29', '33111111', 0),
+	('quocvuong', '123', 'Quốc Vương', 1, 'Vĩnh Long', '0123456789', 'lehongquocvuong@gmail.com', '1988-07-20', '33123456', 0),
+	('ssssssssss', 'dfdfdfdfdf', 'rtrtrtrt', 1, 'yuyuyuyuuy', '2222222222222222', 'lehongquocvuong@gmail.com', '1890-06-30', '00000000000009999999999999', 0),
 	('thi', '123', 'V&otilde; Thị Thi', 0, 'An Giang', '1234567890', 'lehongquocvuong@gmail.com', '1999-08-26', '333333333333333', 0),
 	('thithi', '123', 'v', 0, 'An Giang', '1234567890', 'lehongquocvuong@gmail.com', '2016-12-14', '333333333333333', 0);
 /*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `sanpham_dondathang` (
   CONSTRAINT `sanpham_donhang_sanpham` FOREIGN KEY (`sp_ma`) REFERENCES `sanpham` (`sp_ma`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table king.sanpham_dondathang: ~21 rows (approximately)
+-- Dumping data for table king.sanpham_dondathang: ~18 rows (approximately)
 /*!40000 ALTER TABLE `sanpham_dondathang` DISABLE KEYS */;
 INSERT INTO `sanpham_dondathang` (`sp_ma`, `dh_ma`, `sp_dh_soluong`, `sp_dh_dongia`) VALUES
 	(1, 5, 3, 12000000.00),

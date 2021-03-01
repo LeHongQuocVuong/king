@@ -120,8 +120,10 @@ EOT;
         $mail->isSMTP();                                        // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                         // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                                 // Enable SMTP authentication
-        $mail->Username = 'vuongb1706555@student.ctu.edu.vn'; // SMTP username
-        $mail->Password = 'ckznrfbqahckajwc';                   // SMTP password
+        $mail->Username = 'hotro.nentangtoituonglai@gmail.com'; // SMTP username
+        $mail->Password = 'yjkkdiyfjwksktot';                   // SMTP password
+        // $mail->Username = 'vuongb1706555@student.ctu.edu.vn'; // SMTP username
+        // $mail->Password = 'ckznrfbqahckajwc';                   // SMTP password
         $mail->SMTPSecure = 'tls';                              // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                      // TCP port to connect to
         $mail->CharSet = "UTF-8";
@@ -134,8 +136,10 @@ EOT;
             )
         );
         //Recipients
-        $mail->setFrom('vuongb1706555@student.ctu.edu.vn', 'Mail Liên hệ');
-        $mail->addAddress("lehongquocvuong@gmail.com");               // Add a recipient
+        $mail->setFrom('hotro.nentangtoituonglai@gmail.com', 'Mail Liên hệ');
+        $mail->addAddress($khachhangRow['kh_email']);               // Add a recipient
+        // $mail->setFrom('vuongb1706555@student.ctu.edu.vn', 'Mail Liên hệ');
+        // $mail->addAddress("lehongquocvuong@gmail.com");               // Add a recipient
         // $mail->addCC('cc@example.com');
         // $mail->addBCC('bcc@example.com');
         //Attachments
