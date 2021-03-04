@@ -138,7 +138,7 @@ if (session_id() === '') {
                                             <input type="text" class="form-control" id="kh_cmnd" name="kh_cmnd" placeholder="Chứng minh nhân dân">
                                         </div>
 
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label>Quyền quản trị</label><br />
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" name="kh_quantri" id="kh_quantri-1" class="custom-control-input" value="0" checked>
@@ -148,7 +148,9 @@ if (session_id() === '') {
                                                 <input type="radio" name="kh_quantri" id="kh_quantri-2" class="custom-control-input" value="1">
                                                 <label class="custom-control-label" for="kh_quantri-2">Quản trị</label>
                                             </div>
-                                        </div>
+                                        </div> -->
+
+                                        <input type="hidden" name="kh_quantri" value="0"/>
 
                                         
                                             <div class="row py-2">
@@ -445,7 +447,7 @@ EOT;
                     mysqli_close($conn);
 
                     // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
-                    echo "<script>location.href = 'index.php';</script>";
+                    echo "<script>location.href = 'dangnhap.php';</script>";
                  }
                 endif;
         ?>

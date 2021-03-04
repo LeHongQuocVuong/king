@@ -1,6 +1,33 @@
+<?php
+// hàm `session_id()` sẽ trả về giá trị SESSION_ID (tên file session do Web Server tự động tạo)
+// - Nếu trả về Rỗng hoặc NULL => chưa có file Session tồn tại
+if (session_id() === '') {
+  // Yêu cầu Web Server tạo file Session để lưu trữ giá trị tương ứng với CLIENT (Web Browser đang gởi Request)
+  session_start();
+}
+?>
 <!-- Nhúng file cấu hình để xác định được Tên và Tiêu đề của trang hiện tại người dùng đang truy cập -->
 <?php include_once(__DIR__ . '/../../layouts/config.php'); ?>
 
+
+
+<?php 
+  include_once(__DIR__. '/../../../dbconnect.php');
+  if(isset($_SESSION['kh_tendangnhap_logged']))
+    $kh_tendangnhap = $_SESSION['kh_tendangnhap_logged'];
+    else $kh_tendangnhap = '';
+  $sql_kh_tendangnhap = <<<EOT
+  SELECT *
+  FROM khachhang kh
+  WHERE kh.kh_tendangnhap = '$kh_tendangnhap';
+EOT;
+  $result_kh_tendangnhap = mysqli_query($conn, $sql_kh_tendangnhap);
+  while ($row_kh_tendangnhap = mysqli_fetch_array($result_kh_tendangnhap, MYSQLI_ASSOC)) {
+    $kh_quantri = $row_kh_tendangnhap['kh_quantri'];
+  }
+  // var_dump($kh_quantri); die;
+  if($kh_quantri==1) :
+?>
 <!DOCTYPE html>
 <html>
 
@@ -95,12 +122,12 @@
                   <td><?= $sanpham_dondathang['sp_dh_dongia']?></td>
                   <td>
                     <!-- Nút sửa, bấm vào sẽ hiển thị form hiệu chỉnh thông tin dựa vào khóa chính `lsp_ma` -->
-                    <a href="edit.php?sp_ma=<?= $sanpham_dondathang['sp_ma'] ?>&dh_ma=<?= $sanpham_dondathang['dh_ma'] ?>" class="btn btn-warning">
+                    <a class="btn btn-warning">
                       <span data-feather="edit"></span> Sửa
                     </a>
                     <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` , `dh_ma` -->
                     
-                    <button class="btn btn-danger btnDelete" data-sp_ma="<?= $sanpham_dondathang['sp_ma'] ?>" data-dh_ma="<?= $sanpham_dondathang['dh_ma'] ?>">Xóa</button>
+                    <button class="btn btn-danger btnDelete">Xóa</button>
                   </td>
                   
                 </tr>
@@ -129,50 +156,23 @@
   <script src="/king/assets/vendor/sweetalert/sweetalert.min.js"></script>
 
   <script>
-    $(document).ready( function () {
-      var eventFiredBtnDeleteSweetAlert = function(jE) {     
-        $(jE).on('click', '.btnDelete', function(e) {
-            e.preventDefault();
-            var btnDelete = $(this);
-            swal({
-              title: "Bạn có chắc chắn muốn xóa?",
-              text: "Một khi đã xóa, không thể phục hồi....",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-            }).then((willDelete) => {
-                    
-                    if (willDelete) { // Nếu đồng ý xóa
-                        
-                        // 2. Lấy giá trị của thuộc tính (custom attribute HTML) 'sp_ma', 'dh_ma'
-                        // var sp_ma = $(this).attr('data-sp_ma');
-                        var sp_ma = $(this).data('sp_ma');
-                        var dh_ma = $(this).data('dh_ma');
-
-                        var url = "delete.php?sp_ma=" + sp_ma + "&dh_ma=" + dh_ma;
-                        
-                        // Điều hướng qua trang xóa với REQUEST GET, có tham số sp_ma=...
-                        location.href = url;
-
-                    } else {
-                        swal("Cẩn thận hơn nhé!");
-                    }
-                });
+    $(document).ready( function () {  
+      $('#tableSP').on('draw.dt', function () {
+            console.log('draw.dt');
+            eventFiredBtnDeleteSweetAlert(this);
+        }).DataTable({    
+          responsive: false,   
+          dom: 'Blfrtip',
+          buttons: [
+              'copy', 'excel', 'pdf'
+          ]
         });
-      };
-
-    $('#tableSP').on('draw.dt', function () {
-          console.log('draw.dt');
-          eventFiredBtnDeleteSweetAlert(this);
-      }).DataTable({    
-        responsive: false,   
-        dom: 'Blfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf'
-        ]
-      });
   } );
     </script>
 </body>
 
 </html>
+<?php 
+  else: echo ('<script>location.href = "/king/index.php";</script>');
+  endif;
+  ?>

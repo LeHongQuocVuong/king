@@ -41,7 +41,7 @@ if (session_id() === '') {
     // Đã đăng nhập rồi -> điều hướng về trang chủ
     if (isset($_SESSION['kh_tendangnhap_logged']) && !empty($_SESSION['kh_tendangnhap_logged'])) :
     ?>
-        <h2>Bạn đã đăng nhập rồi. <a href="/king/backend/">Bấm vào đây để quay về trang chủ.</a></h2>
+        <h2>Bạn đã đăng nhập rồi. <a href="/king/">Bấm vào đây để quay về trang chủ.</a></h2>
     <?php else : ?>   
     <!-- Vuejs -->
     <div id="app">

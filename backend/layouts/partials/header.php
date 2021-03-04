@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-  <a class="navbar-brand" href="/">King</a>
+  <a class="navbar-brand" href="/king/">King</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,7 +10,7 @@
         <a class="nav-link" href="/king/backend/pages/dashboard.php">Bảng tin</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/king/frontend/index.php">Trang chủ</a>
+        <a class="nav-link" href="/king/index.php">Trang chủ</a>
       </li>
     </ul>
 
@@ -28,7 +28,7 @@
         </li>
       <?php else : ?>
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="/king/backend/auth/login.php">Đăng nhập</a>
+          <a class="nav-link" href="/king/dangnhap.php">Đăng nhập</a>
         </li>
       <?php endif; ?>
     </ul>
