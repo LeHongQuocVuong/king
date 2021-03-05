@@ -22,7 +22,7 @@ if (session_id() === '') {
 
 // Đã người dùng chưa đăng nhập -> hiển thị thông báo yêu cầu người dùng đăng nhập
 if (!isset($_SESSION['kh_tendangnhap_logged']) || empty($_SESSION['kh_tendangnhap_logged'])) {
-    echo 'Vui lòng Đăng nhập trước khi Thanh toán! <a href="/king/backend/auth/login.php">Click vào đây để đến trang Đăng nhập</a>';
+    echo 'Vui lòng Đăng nhập trước khi Thanh toán! <a href="/king/dangnhap.php">Click vào đây để đến trang Đăng nhập</a>';
     die;
 } else {
     // Nếu giỏ hàng trong session rỗng, return
@@ -116,7 +116,7 @@ EOT;
     $mail = new PHPMailer(true);                                // Passing `true` enables exceptions
     try {
         //Server settings
-        $mail->SMTPDebug = 2;                                   // Enable verbose debug output
+        $mail->SMTPDebug = 0;                                   // Enable verbose debug output
         $mail->isSMTP();                                        // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                         // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                                 // Enable SMTP authentication
@@ -185,7 +185,7 @@ EOT;
             <table border="1" width="100%">
                 <tr>
                     <td colspan="2">
-                        <img src="https://lehongquocvuong.000webhostapp.com/king/assets/img/logo/logo1.png" style="width: 100px; height: 100px; border: 1px solid red;" />
+                        <img src="http://www.lehongquocvuong.xyz/king/assets/img/logo/logo1.png" style="width: 100px; height: 100px; border: 1px solid red;" />
                     </td>
                 </tr>
                 <tr>
@@ -210,5 +210,6 @@ EOT;
     // Hủy dữ liệu giỏ hàng trong session
     unset($_SESSION['giohangdata']);
     // echo 'Đặt hàng thành công. <a href="/king/frontend/">Bấm vào đây để quay về trang chủ</a>';
+    echo "<script>alert('Đã đặt hàng thành công');</script>";
     echo "<script>location.href = '/king/index.php';</script>";
 }
